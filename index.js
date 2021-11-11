@@ -7,6 +7,8 @@ dotenv.config();
 //Import Routes
 const subcRoutes = require('./routes/subscribe.js');
 
+const contactRoutes = require('./routes/contactus.js');
+
 //connecting to database
 mongoose.connect(process.env.DB_CONNECTION,
 {useNewUrlParser:true},
@@ -15,6 +17,6 @@ mongoose.connect(process.env.DB_CONNECTION,
 //middleware
 app.use(express.json());
 //route middleware
-app.use('/api1', subcRoutes)
+app.use('/api1', subcRoutes, contactRoutes)
 
 app.listen(process.env.PORT, ()=>console.log(`server is running at ${process.env.PORT}`));

@@ -5,6 +5,8 @@ const {subscriberController } = require('../controllers/subscriber.js');
 
 
 
+
+
 router.post('/subscribe',subscriberController  )
 
 

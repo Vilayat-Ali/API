@@ -1,12 +1,12 @@
 const Subscriber = require('../models/subscribe.js');
 const joi = require('@hapi/joi');
 
-const {validationSchema } = require('./validations.js');
+const {validationSubcribeSchema } = require('./validations.js');
 
 
 exports.subscriberController = async(req, res)=>
 {
-   const {error}=  validationSchema.validate(req.body);
+   const {error}=  validationSubcribeSchema.validate(req.body);
    if(error) 
    {
     res.status(400).json({success:false, message:error.details[0].message});
@@ -26,14 +26,19 @@ if(emailExist)
     });
     try
     {
-        subscriber.subscribed = true
+       
        const saveSubscriber = await subscriber.save();
+       if(saveSubscriber)
+       {
     
        res.status(201).json({success:true, message:'You Have Succefully subcribed'})
+       subscriber.subscribed = true
+       await subscriber.save();
+       }
     }
     catch(error)
     {
-
+        res.status(400).json({success:false, message:`${error.message}`});
     }
  
 }
